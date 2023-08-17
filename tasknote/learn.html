@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="./learn.css">
+    <title>Death Note</title>
+</head>
+
+<body>
+
+
+    <div class="deathnote">
+        <h1>Life Note</h1>
+        <div class="pen">
+            <input type="text" name="" id="txt" placeholder="Your Next Target">
+            <button class="sub material-symbols-outlined" id="sub">
+                skull
+            </button>
+        </div>
+        <div class="deathnotes" id="dn"></div>
+    </div>
+
+
+
+    <script>
+        let btt = document.getElementById("dn");
+        let btn = document.getElementById("sub");
+
+
+        if (window.localStorage.getItem("blocknote")) {
+            btt.innerHTML = window.localStorage.getItem("blocknote");
+
+            // Attach event listeners to existing delete buttons
+            let deleteButtons = btt.querySelectorAll(".del");
+            deleteButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    button.parentNode.remove();
+                    window.localStorage.setItem("blocknote", btt.innerHTML);
+                });
+            });
+        }
+        console.log(txt);
+        btn.addEventListener("click", () => {
+            let txt = document.getElementById("txt").value; // Move this line inside the event listener
+
+            if (txt.length !== 0) {
+                let div = document.createElement("div");
+                div.classList.add("note");
+                let dt = document.createElement("p");
+                dt.textContent = txt;
+                div.appendChild(dt);
+                let b = document.createElement("button");
+                b.textContent = "delete";
+                b.classList.add("del");
+                div.appendChild(b);
+                btt.appendChild(div);
+                window.localStorage.setItem("blocknote", btt.innerHTML);
+
+                b.addEventListener("click", () => {
+                    div.parentNode.removeChild(div);
+                    window.localStorage.setItem("blocknote", btt.innerHTML);
+                });
+                document.getElementById("txt").value = "";
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>
